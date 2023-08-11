@@ -47,6 +47,8 @@ struct ModelData
     Transform transform;
     
     bool repeatingTexture;
+
+    std::string name;
 };
 
 class Model
@@ -54,10 +56,11 @@ class Model
 
 public:
 
-    void GenerateModel(const std::string& path, const glm::vec3& position, const bool& repeatingTexture = true, const ShaderObject& shaderType = ShaderManager::GetShader("defaultShader"))
+    void GenerateModel(const std::string& path, const std::string& name, const glm::vec3& position, const bool& repeatingTexture = true, const ShaderObject& shaderType = ShaderManager::GetShader("defaultShader"))
 	{ 
         Logger_WriteConsole("Attempting to init a Model...", LogLevel::INFO);
 
+        data.name = name;
         data.repeatingTexture = repeatingTexture;
         data.transform.position = position;
         data.shaderType = shaderType;
@@ -77,6 +80,8 @@ public:
 
         Logger_WriteConsole("Successfully initalized a Model!", LogLevel::INFO);
 	}
+
+    ModelData data;
 
 private:
 
@@ -165,7 +170,7 @@ private:
         for (auto& texture : heightMaps)
             object.RegisterTexture(texture);
 
-        object.RegisterValues(true, true, "model" + std::to_string(rand()), data.transform.position, {}, {});
+        object.RegisterValues(true, true, data.name, data.transform.position, {}, indices);
         
         object.RequestGLBufferCall(GLBufferCall::Register(GL_ARRAY_BUFFER, vertices.size() * sizeof(Vertex), &vertices[0], GL_STATIC_DRAW, "VBO", "verticesCall"));
         object.RequestGLBufferCall(GLBufferCall::Register(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(unsigned int), &indices[0], GL_STATIC_DRAW, "EBO", "indicesCall"));

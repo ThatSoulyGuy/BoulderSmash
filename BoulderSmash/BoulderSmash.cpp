@@ -29,7 +29,7 @@ int main(void)
 	std::shared_ptr<PointLight> light(new PointLight());
 	std::shared_ptr<DirectionalLight> directionalLight(new DirectionalLight());
 
-	window->GenerateWindow("BoulderSmash* 0.0.2", 780, 450);
+	window->GenerateWindow("BoulderSmash* 0.1.4", 780, 450);
 	window->SetBackgroundColor(glm::vec3{ 0.0f, 0.42f, 0.68f });
 	Input::Init(window);
 
@@ -45,15 +45,15 @@ int main(void)
 
 	//object.GenerateTestObject("mm2", glm::vec3{0.0f, 0.0f, 0.0f});
 	//Renderer::RegisterRenderableObject(object);
-	renderer->GenerateModel("assets/characters/asteroid/model/model.obj", glm::vec3{0.0f, 1.0f, 0.0f});
-	
+	renderer->GenerateModel("assets/characters/asteroid/model/model.obj", "modelthing", glm::vec3{0.0f, 1.0f, 0.0f});
+
 	//SoundManager::PlayEffect("explosion");
 
 	while (!window->ShouldClose())
 	{
 		window->UpdateColors();
 
-		light->transform.position = camera->transform->position;
+		light->transform.position = camera->transform.position;
 
 		camera->Update(window);
 		

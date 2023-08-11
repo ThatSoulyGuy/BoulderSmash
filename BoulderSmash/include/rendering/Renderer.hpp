@@ -518,14 +518,18 @@ namespace Renderer
 			glm::mat4 transform = glm::mat4(1.0f);
 			transform = glm::translate(transform, object.data.transform.position);
 
-			if (object.data.transform.rotation.x <= 0)
+			if(object.data.transform.rotation.x > 0 || object.data.transform.rotation.y > 0 || object.data.transform.rotation.z > 0)
+				transform = glm::rotate(transform, glm::radians((float)glfwGetTime()), object.data.transform.rotation);
+
+			/*if (object.data.transform.rotation.x <= 0)
 				object.data.transform.rotation.x = 0.001f;
 
 			if (object.data.transform.rotation.y <= 0)
 				object.data.transform.rotation.y = 0.001f;
 
 			if (object.data.transform.rotation.z <= 0)
-				object.data.transform.rotation.z = 0.001f;
+				object.data.transform.rotation.z = 0.001f;*/
+			
 
 			object.data.shader.Use();
 			object.data.shader.SetMat4("projection", camera->GetProjection().projection);
@@ -536,7 +540,7 @@ namespace Renderer
 			{
 				for (int l = 0; l < lights.size(); ++l)
 				{
-					object.data.shader.SetVec3("viewPos", camera->transform->position);
+					object.data.shader.SetVec3("viewPos", camera->transform.position);
 					object.data.shader.SetFloat("material.shininess", 32.0f);
 
 					object.data.shader.SetVec3("dirLight.direction", directionalLight->direction);
@@ -552,8 +556,8 @@ namespace Renderer
 					object.data.shader.SetFloat("pointLights[" + std::to_string(l) + "].linear", 0.09f);
 					object.data.shader.SetFloat("pointLights[" + std::to_string(l) + "].quadratic", 0.032f);
 
-					object.data.shader.SetVec3("spotLight.position", camera->transform->position);
-					object.data.shader.SetVec3("spotLight.direction", camera->transform->rotation);
+					object.data.shader.SetVec3("spotLight.position", camera->transform.position);
+					object.data.shader.SetVec3("spotLight.direction", camera->transform.rotation);
 					object.data.shader.SetVec3("spotLight.ambient", glm::vec3{ 0.0f, 0.0f, 0.0f });
 					object.data.shader.SetVec3("spotLight.diffuse", glm::vec3{ 0.0f, 0.0f, 0.0f });
 					object.data.shader.SetVec3("spotLight.specular", glm::vec3{ 1.0f, 1.0f, 1.0f });
@@ -568,7 +572,7 @@ namespace Renderer
 			PostShaderCalls();
  
 			glBindVertexArray(object.VAO);
-			glDrawElements(GL_TRIANGLES, 5000, GL_UNSIGNED_INT, 0);
+			glDrawElements(GL_TRIANGLES, object.data.indices.size(), GL_UNSIGNED_INT, 0);
 		}
 	}
 };
