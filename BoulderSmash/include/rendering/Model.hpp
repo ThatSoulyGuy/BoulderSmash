@@ -218,8 +218,6 @@ private:
         Logger_WriteConsole("Successfully loaded Material Textures!", LogLevel::INFO);
         return textures;
     }
-
-    ModelData data;
 };
 
 #endif // !MODEL_HPP

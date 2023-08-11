@@ -69,8 +69,6 @@ private:
 	{
 		Logger_WriteConsole("Attempting to intialize internal stuff...", LogLevel::INFO);
 
-		transform = std::make_shared<Transform>();
-
 		Logger_WriteConsole("Successfully intialized internal stuff!", LogLevel::INFO);
 	}
 

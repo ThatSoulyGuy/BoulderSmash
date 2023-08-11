@@ -527,8 +527,6 @@ namespace Renderer
 			if (object.data.transform.rotation.z <= 0)
 				object.data.transform.rotation.z = 0.001f;
 
-			transform = glm::rotate(transform, 0.0f, object.data.transform.rotation);
-
 			object.data.shader.Use();
 			object.data.shader.SetMat4("projection", camera->GetProjection().projection);
 			object.data.shader.SetMat4("view", camera->GetProjection().view);
