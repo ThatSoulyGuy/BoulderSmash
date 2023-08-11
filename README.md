@@ -1,7 +1,6 @@
 # About:
-This game will be a huge step in the right direction for me, as I will publish this game, update it, and add so many
-features that just might set this game apart. But still it is gonna be such a huge learning expirence! So strap in, as
-we make a game that just might become somthing more that a dream/idea.
+This game is a work in progress, eventually it will be an FPS but you need
+to dodge asteroids but with many features to set ip apart!
 
 # Features:
 The features we currently have:
