@@ -17,9 +17,7 @@
 #include "components/Transform.hpp"
 #include "core/ECS.hpp"
 #include "rendering/Camera.hpp"
-#include "rendering/Mesh.hpp"
 #include "rendering/Renderer.hpp"
-#include "rendering/Shader.hpp"
 #include "rendering/ShaderManager.hpp"
 #include "rendering/Texture.hpp"
 

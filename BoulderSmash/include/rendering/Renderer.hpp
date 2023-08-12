@@ -519,7 +519,7 @@ namespace Renderer
 			transform = glm::translate(transform, object.data.transform.position);
 
 			if(object.data.transform.rotation.x > 0 || object.data.transform.rotation.y > 0 || object.data.transform.rotation.z > 0)
-				transform = glm::rotate(transform, glm::radians((float)glfwGetTime()), object.data.transform.rotation);
+				transform = glm::rotate(transform, object.data.transform.rotation.w, qtov(object.data.transform.rotation));
 
 			/*if (object.data.transform.rotation.x <= 0)
 				object.data.transform.rotation.x = 0.001f;
@@ -557,7 +557,7 @@ namespace Renderer
 					object.data.shader.SetFloat("pointLights[" + std::to_string(l) + "].quadratic", 0.032f);
 
 					object.data.shader.SetVec3("spotLight.position", camera->transform.position);
-					object.data.shader.SetVec3("spotLight.direction", camera->transform.rotation);
+					object.data.shader.SetVec3("spotLight.direction", qtov(camera->transform.rotation));
 					object.data.shader.SetVec3("spotLight.ambient", glm::vec3{ 0.0f, 0.0f, 0.0f });
 					object.data.shader.SetVec3("spotLight.diffuse", glm::vec3{ 0.0f, 0.0f, 0.0f });
 					object.data.shader.SetVec3("spotLight.specular", glm::vec3{ 1.0f, 1.0f, 1.0f });

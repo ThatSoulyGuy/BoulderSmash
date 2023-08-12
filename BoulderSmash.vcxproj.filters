@@ -48,25 +48,10 @@
     <ClInclude Include="BoulderSmash\include\rendering\Cubemap.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="BoulderSmash\include\rendering\IRenderable.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="BoulderSmash\include\rendering\IRenderableContainer.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="BoulderSmash\include\rendering\Mesh.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="BoulderSmash\include\rendering\Model2.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="BoulderSmash\include\rendering\ModelManager.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="BoulderSmash\include\rendering\Renderer.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="BoulderSmash\include\rendering\Shader.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="BoulderSmash\include\rendering\ShaderManager.hpp">
@@ -85,6 +70,18 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="BoulderSmash\include\rendering\Model.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="BoulderSmash\include\gameplay\AsteroidManager.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="BoulderSmash\include\gameplay\Entity.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="BoulderSmash\include\gameplay\EntityAsteroid.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="BoulderSmash\include\gui\TextManager.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -111,5 +108,7 @@
     <None Include="assets\shaders\skyboxFragment.glsl" />
     <None Include="assets\shaders\skyboxVertex.glsl" />
     <None Include="assets\shaders\transparentFragment.glsl" />
+    <None Include="assets\shaders\textFragment.glsl" />
+    <None Include="assets\shaders\textVertex.glsl" />
   </ItemGroup>
 </Project>

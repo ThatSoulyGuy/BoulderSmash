@@ -26,7 +26,7 @@ public:
 		Logger_WriteConsole("Attempting to intialize camera...", LogLevel::INFO);
 
 		transform.position = position;
-		transform.rotation = glm::vec3{ 0.0f, -90.0f, 0.0f };
+		qtov(transform.rotation) = glm::vec3{ 0.0f, -90.0f, 0.0f };
 		transform.up = glm::vec3{ 0.0f, 1.0f, 0.0f };
 
 		projection = glm::perspective<float>(glm::radians(45.0f), static_cast<float>((float)window->GetDimensions().x / (float)window->GetDimensions().y), 0.01, 100);
@@ -43,7 +43,7 @@ public:
 		deltaTime = currentFrame - lastFrame;
 		lastFrame = currentFrame;
 
-		view = glm::lookAt(transform.position, transform.position + transform.rotation, transform.up);
+		view = glm::lookAt(transform.position, transform.position + qtov(transform.rotation), transform.up);
 
 		if (window->GetShouldUpdate())
 		{
@@ -80,33 +80,33 @@ private:
 			float cameraSpeed = static_cast<float>(2.5 * deltaTime);
 			if (Input::GetKeyDown(GLFW_KEY_W))
 			{
-				Logger_WriteConsole(std::format("Position: [{}, {}, {}]", transform.position.x, transform.position.y, transform.position.z), LogLevel::INFO);
+				//Logger_WriteConsole(std::format("Position: [{}, {}, {}]", transform.position.x, transform.position.y, transform.position.z), LogLevel::INFO);
 
-				transform.position += cameraSpeed * transform.rotation;
+				transform.position += cameraSpeed * qtov(transform.rotation);
 
 				if (Input::GetKeyDown(GLFW_KEY_LEFT_CONTROL))
 				{
 
-					transform.position += cameraSpeed * 3 * transform.rotation;
+					transform.position += cameraSpeed * 3 * qtov(transform.rotation);
 				}
 			}
 
 			if (Input::GetKeyDown(GLFW_KEY_S))
 			{
-				transform.position -= cameraSpeed * transform.rotation;
-				Logger_WriteConsole(std::format("Position: [{}, {}, {}]", transform.position.x, transform.position.y, transform.position.z), LogLevel::INFO);
+				transform.position -= cameraSpeed * qtov(transform.rotation);
+				//Logger_WriteConsole(std::format("Position: [{}, {}, {}]", transform.position.x, transform.position.y, transform.position.z), LogLevel::INFO);
 			}
 				
 			if (Input::GetKeyDown(GLFW_KEY_A))
 			{
-				transform.position -= glm::normalize(glm::cross(transform.rotation, transform.up)) * cameraSpeed;
-				Logger_WriteConsole(std::format("Position: [{}, {}, {}]", transform.position.x, transform.position.y, transform.position.z), LogLevel::INFO);
+				transform.position -= glm::normalize(glm::cross(qtov(transform.rotation), transform.up)) * cameraSpeed;
+				//Logger_WriteConsole(std::format("Position: [{}, {}, {}]", transform.position.x, transform.position.y, transform.position.z), LogLevel::INFO);
 			}
 				
 			if (Input::GetKeyDown(GLFW_KEY_D))
 			{
-				transform.position += glm::normalize(glm::cross(transform.rotation, transform.up)) * cameraSpeed;
-				Logger_WriteConsole(std::format("Position: [{}, {}, {}]", transform.position.x, transform.position.y, transform.position.z), LogLevel::INFO);
+				transform.position += glm::normalize(glm::cross(qtov(transform.rotation), transform.up)) * cameraSpeed;
+				//Logger_WriteConsole(std::format("Position: [{}, {}, {}]", transform.position.x, transform.position.y, transform.position.z), LogLevel::INFO);
 			}
 		}
 
@@ -150,7 +150,7 @@ private:
 		front.x = cos(glm::radians(yaw)) * cos(glm::radians(pitch));
 		front.y = sin(glm::radians(pitch));
 		front.z = sin(glm::radians(yaw)) * cos(glm::radians(pitch));
-		transform.rotation = glm::normalize(front);
+		qtov(transform.rotation) = glm::normalize(front);
 	}
 
 	float yaw = -90.0f;

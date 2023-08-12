@@ -102,7 +102,7 @@ public:
 		glfwTerminate();
 	}
 
-	glm::ivec2 GetDimensions()
+	static glm::ivec2 GetDimensions()
 	{
 		int width, height;
 		glfwGetWindowSize(window, &width, &height);
@@ -133,11 +133,12 @@ private:
 	}
 
 	glm::vec3 backgroundColor;
-	GLFWwindow* window;
+	static GLFWwindow* window;
 	static MouseCallbackData mouseData;
 
 };
 
+GLFWwindow* Window::window;
 MouseCallbackData Window::mouseData;
 
 #endif // !WINDOW_HPP

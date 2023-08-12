@@ -7,7 +7,6 @@
 #include "components/Transform.hpp"
 #include "rendering/Camera.hpp"
 #include "rendering/Cubemap.hpp"
-#include "rendering/Shader.hpp"
 #include "rendering/ShaderManager.hpp"
 
 unsigned int VAO, VBO;
