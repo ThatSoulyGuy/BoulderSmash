@@ -125,6 +125,7 @@ private:
 	{
 		shouldResize = true;
 		glViewport(0, 0, width, height);
+		
 	}
 
 	static void MouseCallback(GLFWwindow* window, double xposIn, double yposIn)

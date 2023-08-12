@@ -60,7 +60,8 @@ int main(void)
 
 		camera->Update(window);
 		
-		TextManager::RenderText("Sample", glm::vec2{ 0.0f, 0.0f }, 1.0f, glm::vec3(1.0f, 1.0f, 1.0f));
+		TextManager::UpdateRendering();
+		TextManager::RenderText("Sample", glm::vec2{ 0.0f, 0.6f }, glm::vec2{ 1.0f, 1.0f }, glm::vec3(1.0f, 1.0f, 1.0f));
 
 		EntityManager::UpdateEntities();
 		Renderer::RenderObjects(camera);

@@ -41,6 +41,12 @@ namespace TextManager
         glUniformMatrix4fv(glGetUniformLocation(shader.ID, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
     }
 
+    void UpdateRendering()
+    {
+        shader.Use();
+        glUniformMatrix4fv(glGetUniformLocation(shader.ID, "projection"), 1, GL_FALSE, glm::value_ptr(glm::ortho(0.0f, static_cast<float>(Window::GetDimensions().x), 0.0f, static_cast<float>(Window::GetDimensions().y))));
+    }
+
 	void InitText()
 	{
         InitRendering();
@@ -110,24 +116,25 @@ namespace TextManager
         glBindVertexArray(0);
 	}
 
-    void RenderText(const std::string& text, glm::vec2 position, const float& scale, const glm::vec3& color)
+    void RenderText(const std::string& text, glm::vec2 position, const glm::vec2& scale, const glm::vec3& color)
     {
         shader.Use();
         glUniform3f(glGetUniformLocation(shader.ID, "textColor"), color.x, color.y, color.z);
         glActiveTexture(GL_TEXTURE0);
         glBindVertexArray(VAO);
 
+        glm::vec2 screenPosition = glm::vec2{ position.x * Window::GetDimensions().x, position.y * Window::GetDimensions().y };
         std::string::const_iterator c;
 
         for (c = text.begin(); c != text.end(); c++)
         {
             Character ch = characters[*c];
 
-            float xpos = position.x + ch.bearing.x * scale;
-            float ypos = position.y - (ch.size.y - ch.bearing.y) * scale;
+            float xpos = screenPosition.x + ch.bearing.x * scale.x;
+            float ypos = screenPosition.y - (ch.size.y - ch.bearing.y) * scale.y;
 
-            float w = ch.size.x * scale;
-            float h = ch.size.y * scale;
+            float w = ch.size.x * scale.x;
+            float h = ch.size.y * scale.y;
             
             float vertices[6][4] = 
             {
@@ -149,7 +156,7 @@ namespace TextManager
             
             glDrawArrays(GL_TRIANGLES, 0, 6);
             
-            position.x += (ch.advance >> 6) * scale;
+            screenPosition.x += (ch.advance >> 6) * scale.x;
         }
 
         glBindVertexArray(0);
