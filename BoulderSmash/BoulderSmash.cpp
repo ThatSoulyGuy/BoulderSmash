@@ -11,6 +11,7 @@
 #include "rendering/Model.hpp"
 #include "rendering/ShaderManager.hpp"
 #include "rendering/Skybox.hpp"
+#include "gui/MainOverlay.hpp"
 #include "gui/TextManager.hpp"
 
 int main(void)
@@ -26,13 +27,15 @@ int main(void)
 	SoundManager::Init();
 	SoundManager::RegisterSound(SoundEffect::Register("sounds/explode1", "explosion", true, 1.0f));
 
+	MainOverlay::Init();
+
 	std::shared_ptr<Window> window(new Window());
 	EntityAsteroid asteroid;
 	std::shared_ptr<Camera> camera(new Camera());
 	std::shared_ptr<PointLight> light(new PointLight());
 	std::shared_ptr<DirectionalLight> directionalLight(new DirectionalLight());
 
-	window->GenerateWindow("BoulderSmash* 0.1.5", 780, 450);
+	window->GenerateWindow("BoulderSmash* 0.1.6", 780, 450);
 	window->SetBackgroundColor(glm::vec3{ 0.0f, 0.0f, 0.0f });
 
 	Input::Init(window);
@@ -50,7 +53,7 @@ int main(void)
 
 	asteroid.Start();
 
-	//SoundManager::PlayEffect("explosion");
+	SoundManager::PlayEffect("explosion");
 
 	while (!window->ShouldClose())
 	{
@@ -65,6 +68,9 @@ int main(void)
 		EntityManager::UpdateEntities();
 		Renderer::RenderObjects(camera);
 		Skybox::Render(camera);
+
+		MainOverlay::RenderTime();
+		MainOverlay::UpdateTime();
 
 		window->UpdateBuffers();
 	}

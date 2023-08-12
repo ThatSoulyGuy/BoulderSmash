@@ -180,6 +180,7 @@
     <ClInclude Include="BoulderSmash\include\gameplay\AsteroidManager.hpp" />
     <ClInclude Include="BoulderSmash\include\gameplay\Entity.hpp" />
     <ClInclude Include="BoulderSmash\include\gameplay\EntityAsteroid.hpp" />
+    <ClInclude Include="BoulderSmash\include\gui\MainOverlay.hpp" />
     <ClInclude Include="BoulderSmash\include\lighting\DirectionalLight.hpp" />
     <ClInclude Include="BoulderSmash\include\lighting\Light.hpp" />
     <ClInclude Include="BoulderSmash\include\lighting\PointLight.hpp" />
