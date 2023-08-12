@@ -5,7 +5,6 @@
 #include "audio/SoundManager.hpp"
 #include "rendering/Camera.hpp"
 #include "rendering/Renderer.hpp"
-#include "lighting/PointLight.hpp"
 #include "rendering/Model.hpp"
 #include "rendering/ShaderManager.hpp"
 #include "rendering/Skybox.hpp"
