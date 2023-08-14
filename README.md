@@ -16,6 +16,11 @@ Asteroid collision,
 Game objective,
 Win possibility
 
+# Screenshots:
+![Screenshot (71)](https://github.com/ThatSoulyGuy/BoulderSmash/assets/119379712/016db2f2-579b-44e6-bfbc-39b4e9f6ebee)
+
+![Screenshot (73)](https://github.com/ThatSoulyGuy/BoulderSmash/assets/119379712/d989ed71-ab0b-4e11-8a2e-fbb9c0481c9f)
+
 # Closing Statement:
 If you actually took the time to read whatever this "README.md" is,
 than WOW you ...actually care... So this game will probably be working
