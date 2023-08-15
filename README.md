@@ -1,12 +1,14 @@
 # About:
 This game is a work in progress, eventually it will be an FPS but you need
 to dodge asteroids but with many features to set ip apart!
+Note: All of the models/textures were made by ME.
 
 # Features:
 The features we currently have:
 GLFW window (Status:👍),
 GLFW API Integration (Status:👍),
 Object Oriented Programming to the next level (Status:👍),
+Audio Handleing (Status:👍),
 Code Compatibility (Status:76%),
 Model loading (Status:23%)
 
