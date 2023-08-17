@@ -28,9 +28,6 @@ inline ComponentID GetComponentTypeID() noexcept
 
 constexpr std::size_t maxComponents = 128;
 
-using ComponentBitset = std::bitset<maxComponents>;
-using ComponentArray = std::array<Component*, maxComponents>;
-
 class Component
 {
 
@@ -75,38 +72,8 @@ public:
 		active = false;
 	}
 
-	template<typename T>
-	bool HasComponent() const
-	{
-		return componentBitset[GetComponentTypeID<T>()];
-	}
-
-	template<typename T, typename... TArgs>
-	T& AddComponent(TArgs&&... mArgs)
-	{
-		T* c(new T(std::forward<TArgs>(mArgs)...));
-		c->gameObject = this;
-		std::unique_ptr<Component> uPtr{ c };
-		components.emplace_back(std::move(uPtr));
-
-		componentArray[GetComponentTypeID<T>()] = c;
-		componentBitset[GetComponentTypeID<T>()] = true;
-		
-		c->Start();
-
-		return *c;
-	}
-
-	template<typename T>
-	T& GetComponent()
-	{
-		auto ptr(componentArray[GetComponentTypeID<T>()]);
-		return *static_cast<T*>(ptr);
-	}
-
 private:
 
-	bool active = true;
 	std::vector<std::unique_ptr<Component>> components;
 
 	ComponentArray componentArray;
@@ -136,11 +103,7 @@ public:
 
 	GameObject& AddGameObject()
 	{
-		GameObject* g = new GameObject();
-		std::unique_ptr<GameObject> uPtr{ g };
-		gameObjects.emplace_back(std::move(uPtr));
 
-		return *g;
 	}
 
 private:

@@ -1,7 +1,6 @@
 #include "core/Logger.hpp"
 #include "core/Input.hpp"
 #include "core/Window.hpp"
-#include "core/ECS.hpp"
 #include "audio/SoundManager.hpp"
 #include "gameplay/Entity.hpp"
 #include "gameplay/EntityAsteroid.hpp"
@@ -30,7 +29,6 @@ int main(void)
 	MainOverlay::Init();
 
 	std::shared_ptr<Window> window(new Window());
-	EntityAsteroid asteroid;
 	std::shared_ptr<Camera> camera(new Camera());
 	std::shared_ptr<PointLight> light(new PointLight());
 	std::shared_ptr<DirectionalLight> directionalLight(new DirectionalLight());
