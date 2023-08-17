@@ -16,7 +16,6 @@
 #include <assimp/postprocess.h>
 #include "components/Transform.hpp"
 #include "core/ECS.hpp"
-#include "rendering/Camera.hpp"
 #include "rendering/Renderer.hpp"
 #include "rendering/ShaderManager.hpp"
 #include "rendering/Texture.hpp"
@@ -49,7 +48,7 @@ struct ModelData
     std::string name;
 };
 
-class Model
+class Model : public Component
 {
 
 public:

@@ -1,7 +1,9 @@
+#include "core/ECS.hpp"
 #include "core/Logger.hpp"
 #include "core/Input.hpp"
 #include "core/Window.hpp"
 #include "audio/SoundManager.hpp"
+#include "gameplay/AsteroidManager.hpp"
 #include "gameplay/Entity.hpp"
 #include "gameplay/EntityAsteroid.hpp"
 #include "lighting/PointLight.hpp"
@@ -22,7 +24,7 @@ int main(void)
 	ShaderManager::RegisterShader(ShaderObject::Register("shaders/transparent", "transparentShader"));
 	ShaderManager::RegisterShader(ShaderObject::Register("shaders/light", "lightShader"));
 	ShaderManager::RegisterShader(ShaderObject::Register("shaders/skybox", "skyboxShader"));
-	
+
 	SoundManager::Init();
 	SoundManager::RegisterSound(SoundEffect::Register("sounds/explode1", "explosion", true, 1.0f));
 
@@ -33,7 +35,7 @@ int main(void)
 	std::shared_ptr<PointLight> light(new PointLight());
 	std::shared_ptr<DirectionalLight> directionalLight(new DirectionalLight());
 
-	window->GenerateWindow("BoulderSmash* 0.1.6", 780, 450);
+	window->GenerateWindow("BoulderSmash* 0.1.7", 780, 450);
 	window->SetBackgroundColor(glm::vec3{ 0.0f, 0.0f, 0.0f });
 
 	Input::Init(window);
@@ -49,9 +51,9 @@ int main(void)
 
 	Skybox::GenerateSkybox(DEFAULT_CUBEMAP);
 
-	asteroid.Start();
+	AsteroidManager::SpawnAsteroid(TRANSFORM_POSITION(0.0f, 0.0f, 10.0f), BoxCollider::Register(TRANSFORM_DEFAULT, glm::vec3{10.0f, 10.0f, 10.0f}), "asteroid");
 
-	SoundManager::PlayEffect("explosion");
+	//SoundManager::PlayEffect("explosion");
 
 	while (!window->ShouldClose())
 	{
@@ -62,8 +64,7 @@ int main(void)
 		camera->Update(window);
 		
 		TextManager::UpdateRendering();
-
-		EntityManager::UpdateEntities();
+		ECSManager::UpdateGameObjects();
 		Renderer::RenderObjects(camera);
 		Skybox::Render(camera);
 

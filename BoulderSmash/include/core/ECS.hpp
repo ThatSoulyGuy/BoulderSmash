@@ -7,11 +7,14 @@
 #include <algorithm>
 #include <bitset>
 #include <array>
+#include "components/Transform.hpp"
+
+#define maxComponents 32
 
 class Component;
 class GameObject;
 
-using ComponentID = std::size_t;
+typedef std::size_t ComponentID;
 
 inline ComponentID GetComponentTypeID()
 {
@@ -26,90 +29,104 @@ inline ComponentID GetComponentTypeID() noexcept
 	return typeID;
 }
 
-constexpr std::size_t maxComponents = 128;
+using ComponentBitset = std::bitset<maxComponents>;
+using ComponentArray = std::array<Component*, maxComponents>;
 
 class Component
 {
-
-public:
 	
+public:
+
 	GameObject* gameObject;
 
-	virtual void Start() { };
-	virtual void Update() { };
-	virtual void Render() { };
+	virtual void Start() {}
+	virtual void Update() {}
 
-	virtual ~Component() { };
-
-private:
-
-
-
+	virtual ~Component() {}
 };
 
 class GameObject
 {
 
 public:
-	
+
 	void Update()
 	{
-		for (auto& c : components) c->Update();
+		for (auto& component : components)
+			component->Update();
 	}
 
-	void Render()
+	template<typename T>
+	bool HasComponent()
 	{
-		for (auto& c : components) c->Render();
+		return bitset[GetComponentTypeID<T>()];
 	}
 
-	bool IsActive() const
+	template<typename T, typename... TArgs>
+	T& AddComponent(TArgs&&... args)
 	{
-		return active;
+		T* component(new T(std::forward<TArgs>(args)...));
+		component->gameObject = this;
+
+		std::unique_ptr<Component> componentPtr{ component };
+		components.emplace_back(std::move(componentPtr));
+
+		array[GetComponentTypeID<T>()] = component;
+		bitset[GetComponentTypeID<T>()] = true;
+
+		component->Start();
+
+		return *component;
 	}
 
-	void Destroy()
+	template<typename T>
+	T& GetComponent()
 	{
-		active = false;
+		auto componentPtr(array[GetComponentTypeID<T>()]);
+
+		return *static_cast<T*>(componentPtr);
 	}
+
+	bool active = true;
+	Transform transform;
 
 private:
 
 	std::vector<std::unique_ptr<Component>> components;
 
-	ComponentArray componentArray;
-	ComponentBitset componentBitset;
-
+	ComponentArray array;
+	ComponentBitset bitset;
 };
 
 class ECSManager
 {
 
 public:
-	
-	void Update()
+
+	static GameObject& AddGameObject()
 	{
-		for (auto& g : gameObjects) g->Update();
+		GameObject* gameObject = new GameObject();
+		std::unique_ptr<GameObject> gameObjectPtr{ gameObject };
+
+		gameObjects.emplace_back(std::move(gameObjectPtr));
+
+		return *gameObject;
 	}
 
-	void Render()
+	static void UpdateGameObjects()
 	{
-		for (auto& g : gameObjects) g->Render();
-	}
+		for (auto& gameObject : gameObjects) 
+			gameObject->Update();
 
-	void Refresh()
-	{
-		gameObjects.erase(std::remove_if(std::begin(gameObjects), std::end(gameObjects), [](const std::unique_ptr<GameObject>& mGameObject) { return !mGameObject->IsActive(); }), std::end(gameObjects));
-	}
-
-	GameObject& AddGameObject()
-	{
-
+		gameObjects.erase(std::remove_if(std::begin(gameObjects), std::end(gameObjects), [](const std::unique_ptr<GameObject>& gameobject) { return !gameobject->active; }), std::end(gameObjects));
 	}
 
 private:
 
-	std::vector<std::unique_ptr<GameObject>> gameObjects;
+	static std::vector<std::unique_ptr<GameObject>> gameObjects;
 
 };
+
+std::vector<std::unique_ptr<GameObject>> ECSManager::gameObjects;
 
 #endif // !ECS_HPP

@@ -10,9 +10,8 @@ public:
 
 	void Start() override
 	{
-		Init();
-
-		model->GenerateModel("assets/characters/asteroid/model/model.obj", "asteroid", glm::vec3{ 0.0f, 0.0f, 0.0f });
+		gameObject->AddComponent<Model>();
+		gameObject->GetComponent<Model>().GenerateModel("assets/characters/asteroid/model/model.obj", "asteroid", glm::vec3{ 0.0f, 0.0f, 0.0f });
 	}
 
 	void Update() override

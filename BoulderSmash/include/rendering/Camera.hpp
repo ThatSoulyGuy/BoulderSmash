@@ -6,7 +6,9 @@
 #include <GLFW/glfw3.h>
 #include "core/Input.hpp"
 #include "core/Window.hpp"
+#include "components/BoxCollider.hpp"
 #include "components/Transform.hpp"
+//#include "gameplay/Entity.hpp"
 
 struct CameraProjection
 {
@@ -44,14 +46,18 @@ public:
 		lastFrame = currentFrame;
 
 		view = glm::lookAt(transform.position, transform.position + qtov(transform.rotation), transform.up);
-
+		
 		if (window->GetShouldUpdate())
 		{
 			projection = glm::perspective<float>(glm::radians(45.0f), static_cast<float>((float)window->GetDimensions().x / (float)window->GetDimensions().y), 0.01, 100);
 			window->SetShouldUpdate(false);
 		}
+		
+		//if (collider.IsCollidingWith(EntityManager::GetEntity("asteroid").collider))
+		//	Logger_WriteConsole("UwU", LogLevel::INFO);
 
 		UpdateInput();
+		collider.transform = transform;
 	}
 
 	CameraProjection GetProjection() const
@@ -62,6 +68,7 @@ public:
 		return out;
 	}
 
+	BoxCollider collider;
 	Transform transform;
 
 private:
@@ -69,6 +76,8 @@ private:
 	void InternalInit()
 	{
 		Logger_WriteConsole("Attempting to intialize internal stuff...", LogLevel::INFO);
+
+		collider.size = glm::vec3{1.2, 1.2, 1.2};
 
 		Logger_WriteConsole("Successfully intialized internal stuff!", LogLevel::INFO);
 	}

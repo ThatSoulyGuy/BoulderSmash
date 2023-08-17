@@ -172,6 +172,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="BoulderSmash\include\audio\SoundManager.hpp" />
+    <ClInclude Include="BoulderSmash\include\components\BoxCollider.hpp" />
     <ClInclude Include="BoulderSmash\include\components\Transform.hpp" />
     <ClInclude Include="BoulderSmash\include\core\ECS.hpp" />
     <ClInclude Include="BoulderSmash\include\core\Input.hpp" />
