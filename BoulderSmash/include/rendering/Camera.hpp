@@ -8,7 +8,7 @@
 #include "core/Window.hpp"
 #include "components/BoxCollider.hpp"
 #include "components/Transform.hpp"
-//#include "gameplay/Entity.hpp"
+#include "gameplay/Entity.hpp"
 
 struct CameraProjection
 {
@@ -41,6 +41,8 @@ public:
 
 	void Update(const std::shared_ptr<Window>& window)
 	{
+		static bool isColliding = true;
+
 		float currentFrame = static_cast<float>(glfwGetTime());
 		deltaTime = currentFrame - lastFrame;
 		lastFrame = currentFrame;
@@ -53,11 +55,18 @@ public:
 			window->SetShouldUpdate(false);
 		}
 		
-		//if (collider.IsCollidingWith(EntityManager::GetEntity("asteroid").collider))
-		//	Logger_WriteConsole("UwU", LogLevel::INFO);
+		if (collider.IsCollidingWith(EntityManager::GetEntity("asteroid").gameObject->GetComponent<BoxCollider>()) && isColliding)
+		{
+			SoundManager::PlayEffect("explosion", false);
+
+			isColliding = false;
+		}
+			
+		if (!collider.IsCollidingWith(EntityManager::GetEntity("asteroid").gameObject->GetComponent<BoxCollider>()) && !isColliding)
+			isColliding = true;
 
 		UpdateInput();
-		collider.transform = transform;
+		collider.transformThis = transform;
 	}
 
 	CameraProjection GetProjection() const
@@ -77,7 +86,7 @@ private:
 	{
 		Logger_WriteConsole("Attempting to intialize internal stuff...", LogLevel::INFO);
 
-		collider.size = glm::vec3{1.2, 1.2, 1.2};
+		collider = BoxCollider::Register(transform, glm::vec3{ 1.2, 1.2, 1.2 }, false);
 
 		Logger_WriteConsole("Successfully intialized internal stuff!", LogLevel::INFO);
 	}

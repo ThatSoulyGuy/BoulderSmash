@@ -18,7 +18,6 @@
 struct SoundEffect
 {
     float pitch = 1.0f;
-    float gain = 1.1f;
 
     std::string name;
     std::string path;
@@ -26,25 +25,20 @@ struct SoundEffect
 	glm::vec3 positon = glm::vec3{ 0.0f, 0.0f, 0.0f };
     glm::vec3 velocity = glm::vec3{ 0.0f, 0.0f, 0.0f };
 
-    bool loop = false;
-
     ALuint source = 0;
     ALuint sound = 0;
 
-	static SoundEffect Register(const std::string& path, const std::string& name, const bool& loop, const float& volume)
+	static SoundEffect Register(const std::string& path, const std::string& name)
 	{
 		SoundEffect out;
 
 		out.pitch = 1.1f;
-		out.gain = volume;
 		
 		out.name = name;
 		out.path = "assets/" + path + ".mp3";
 
 		out.positon = glm::vec3{ 0.0f, 0.0f, 0.0f };
 		out.velocity = glm::vec3{ 0.0f, 0.0f, 0.0f };
-
-		out.loop = loop;
 		
 		return out;
 	}
@@ -177,7 +171,7 @@ namespace SoundManager
 		soundBuffers.push_back(effect);
     }
 
-    void PlayEffect(const std::string& name) 
+    void PlayEffect(const std::string& name, const bool& loop, const float& volume = 1.1f)
     {
 		for (auto effect : soundBuffers)
 		{
@@ -186,10 +180,10 @@ namespace SoundManager
 				ALuint source;
 				alGenSources(1, &source);
 				alSourcef(source, AL_PITCH, effect.pitch);
-				alSourcef(source, AL_GAIN, effect.gain);
+				alSourcef(source, AL_GAIN, volume);
 				alSource3f(source, AL_POSITION, effect.positon.x, effect.positon.y, effect.positon.z);
 				alSource3f(source, AL_VELOCITY, effect.velocity.x, effect.velocity.y, effect.velocity.z);
-				alSourcei(source, AL_LOOPING, effect.loop);
+				alSourcei(source, AL_LOOPING, loop);
 				alSourcei(source, AL_BUFFER, (ALint)effect.sound);
 
 				alSourcePlay(source);

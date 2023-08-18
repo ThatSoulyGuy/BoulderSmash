@@ -2,6 +2,7 @@
 #define ENTITY_ASTEROID_HPP
 
 #include "gameplay/Entity.hpp"
+#include "rendering/Model.hpp"
 
 struct EntityAsteroid : public Entity
 {
@@ -16,7 +17,10 @@ public:
 
 	void Update() override
 	{
-		transform.Rotate(glm::quat{5, 0, 0, 1});
+		gameObject->transform.Rotate(glm::quat{5, 0, 0, 1});
+
+		gameObject->GetComponent<Model>().data.transform.position = gameObject->transform.position;
+		gameObject->GetComponent<Model>().data.transform.rotation = gameObject->transform.rotation;
 	}
 
 private:

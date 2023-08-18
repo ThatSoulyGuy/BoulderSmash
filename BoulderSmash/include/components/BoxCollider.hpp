@@ -6,42 +6,50 @@
 
 struct BoxCollider : public Component
 {
+	bool useGameObject;
+	Transform transformThis;
 	glm::vec3 size;
 
 	bool IsCollidingWith(BoxCollider other)
 	{
-		//FORMAT: v = Vertex, <x, y, z> Axis, <p, n> Positive/Negitive, <t, o> This/Other
-		float vxpt = size.x / 2;
-		float vxnt = -(size.x / 2);
+		glm::vec3 position;
+		glm::vec3 otherPosition;
 
-		float vxpo = other.size.x / 2;
-		float vxno = -(other.size.x / 2);
+		if (useGameObject)
+			position = gameObject->transform.position;
+		else
+			position = transformThis.position;
 
+		otherPosition = other.transformThis.position;
 
-		float vypt = size.y / 2;
-		float vynt = -(size.y / 2);
-
-		float vypo = other.size.y / 2;
-		float vyno = -(other.size.y / 2);
-
-
-		float vzpt = size.z / 2;
-		float vznt = -(size.z / 2);
-
-		float vzpo = other.size.z / 2;
-		float vzno = -(other.size.z / 2);
-
-		if ((vxpt <= vxpo || vxnt >= vxno) && (vypt <= vypo || vynt >= vyno) && (vzpt <= vzpo || vznt >= vzno))
-			return true;
-
-		return false;
+		return (position.x < otherPosition.x + other.size.x) &&
+			(position.x + size.x > otherPosition.x) &&
+			(position.y < otherPosition.y + other.size.y) &&
+			(position.y + size.y > otherPosition.y) &&
+			(position.z < otherPosition.z + other.size.z) &&
+			(position.z + size.z > otherPosition.z);
 	}
 
-	static BoxCollider Register(const Transform& transform, const glm::vec3& size)
+	BoxCollider operator==(BoxCollider other)
+	{
+		BoxCollider out;
+
+		if (other.useGameObject)
+			out.gameObject->transform = other.transformThis;
+		else
+			out.transformThis = other.transformThis;
+		
+		return out;
+	}
+
+	static BoxCollider Register(const Transform& transform, const glm::vec3& size, const bool& useGameObject)
 	{
 		BoxCollider collider;
 
-		collider.transform = transform;
+		collider.useGameObject = useGameObject;
+
+		collider.transformThis = transform;
+
 		collider.size = size;
 
 		return collider;

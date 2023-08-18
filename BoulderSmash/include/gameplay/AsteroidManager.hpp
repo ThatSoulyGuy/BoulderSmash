@@ -12,11 +12,13 @@ namespace AsteroidManager
 	{
 		GameObject& gameObject = ECSManager::AddGameObject();
 
-		gameObject.AddComponent<EntityAsteroid>();
-		gameObject.GetComponent<EntityAsteroid>().Start();
-		gameObject.GetComponent<EntityAsteroid>().transform = transform;
-		gameObject.GetComponent<EntityAsteroid>().name = name;
-		gameObject.GetComponent<EntityAsteroid>().collider = collider;
+		EntityAsteroid& asteroid = gameObject.AddComponent<EntityAsteroid>();
+		asteroid.Start();
+		asteroid.gameObject->transform = transform;
+		asteroid.name = name;
+
+		BoxCollider& boxCollider = gameObject.AddComponent<BoxCollider>();
+		boxCollider = collider;
 
 		spawnedAsteroids.push_back(gameObject.GetComponent<EntityAsteroid>());
 		EntityManager::RegisterEntity(gameObject.GetComponent<EntityAsteroid>());

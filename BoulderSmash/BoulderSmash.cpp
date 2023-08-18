@@ -26,7 +26,7 @@ int main(void)
 	ShaderManager::RegisterShader(ShaderObject::Register("shaders/skybox", "skyboxShader"));
 
 	SoundManager::Init();
-	SoundManager::RegisterSound(SoundEffect::Register("sounds/explode1", "explosion", true, 1.0f));
+	SoundManager::RegisterSound(SoundEffect::Register("sounds/explode1", "explosion"));
 
 	MainOverlay::Init();
 
@@ -35,7 +35,7 @@ int main(void)
 	std::shared_ptr<PointLight> light(new PointLight());
 	std::shared_ptr<DirectionalLight> directionalLight(new DirectionalLight());
 
-	window->GenerateWindow("BoulderSmash* 0.1.7", 780, 450);
+	window->GenerateWindow("BoulderSmash* 0.1.9", 780, 450);
 	window->SetBackgroundColor(glm::vec3{ 0.0f, 0.0f, 0.0f });
 
 	Input::Init(window);
@@ -51,9 +51,7 @@ int main(void)
 
 	Skybox::GenerateSkybox(DEFAULT_CUBEMAP);
 
-	AsteroidManager::SpawnAsteroid(TRANSFORM_POSITION(0.0f, 0.0f, 10.0f), BoxCollider::Register(TRANSFORM_DEFAULT, glm::vec3{10.0f, 10.0f, 10.0f}), "asteroid");
-
-	//SoundManager::PlayEffect("explosion");
+	AsteroidManager::SpawnAsteroid(TRANSFORM_POSITION(0.0f, 0.0f, 10.0f), BoxCollider::Register(TRANSFORM_DEFAULT, glm::vec3{10.0f, 10.0f, 10.0f}, true), "asteroid");
 
 	while (!window->ShouldClose())
 	{

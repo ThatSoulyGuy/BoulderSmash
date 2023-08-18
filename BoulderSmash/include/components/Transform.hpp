@@ -5,7 +5,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
-#define TRANSFORM_DEFAULT Transform::Register(glm::vec3{0.0f, 0.0f, 0.0f}, glm::quat{0.0f, 0.0f, 0.0f, 1.0f})
+#define TRANSFORM_DEFAULT Transform::Register(glm::vec3{0.0f, 0.0f, 0.0f}, glm::quat{1.0f, 0.0f, 0.0f, 0.0f})
 #define TRANSFORM_POSITION(x, y, z) Transform::Register(glm::vec3{x, y, z}, glm::quat{1.0f, 0.0f, 0.0f, 0.0f})
 #define TRANSFORM_ROTATION(x, y, z, w) Transform::Register(glm::vec3{0.0f, 0.0f, 0.0f}, glm::quat{w, x, y, z})
 

@@ -3,6 +3,7 @@
 
 #include <string>
 #include <memory>
+#include <format>
 #include "components/BoxCollider.hpp"
 
 struct Entity : public Component
@@ -24,13 +25,14 @@ public:
 	{
 		UpdateEntity();
 
-		if (gameObject->HasComponent<Model>())
+		/*if (gameObject->HasComponent<Model>())
 		{
 			gameObject->GetComponent<Model>().data.transform.position = transform.position;
 			gameObject->GetComponent<Model>().data.transform.rotation = transform.rotation;
-		}
+		}*/
 		
-		collider.transform = transform;
+		if(gameObject->HasComponent<BoxCollider>())
+			gameObject->GetComponent<BoxCollider>().gameObject->transform = gameObject->transform;
 	}
 
 	float maxHealth = 20.0f;

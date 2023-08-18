@@ -53,7 +53,9 @@ public:
 	void Update()
 	{
 		for (auto& component : components)
+		{
 			component->Update();
+		}
 	}
 
 	template<typename T>
@@ -115,10 +117,12 @@ public:
 
 	static void UpdateGameObjects()
 	{
-		for (auto& gameObject : gameObjects) 
-			gameObject->Update();
-
 		gameObjects.erase(std::remove_if(std::begin(gameObjects), std::end(gameObjects), [](const std::unique_ptr<GameObject>& gameobject) { return !gameobject->active; }), std::end(gameObjects));
+		
+		for (auto& gameObject : gameObjects)
+		{
+			gameObject->Update();
+		}
 	}
 
 private:
