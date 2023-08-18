@@ -3,7 +3,6 @@
 
 #include <string>
 #include <memory>
-#include "rendering/Model.hpp"
 #include "components/BoxCollider.hpp"
 
 struct Entity : public Component
@@ -37,8 +36,6 @@ public:
 	float maxHealth = 20.0f;
 	float currentHealth;
 
-	BoxCollider collider;
-	Transform transform;
 	std::string name;
 
 private:

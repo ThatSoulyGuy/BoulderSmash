@@ -6,7 +6,6 @@
 
 struct BoxCollider : public Component
 {
-	Transform transform;
 	glm::vec3 size;
 
 	bool IsCollidingWith(BoxCollider other)
