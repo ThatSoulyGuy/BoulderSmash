@@ -18,13 +18,6 @@ bool shouldResize = false;
 
 class Window
 {
-
-public:
-	
-	void GenerateWindow(const std::string& name, const int& width, const int& height)
-	{
-		Logger_WriteConsole("Attempting to create GLFW window...", LogLevel::INFO);
-
 		if (!glfwInit())
 			Logger_ThrowError("NULL", "Do you have OpenGL compatible graphics card?", true);
 
@@ -44,8 +37,6 @@ public:
 		if(!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
 			Logger_WriteConsole("Unexpected >>NULL<< at Window::CreateWindow::31 (Do you have GLAD compatible graphics card?)", LogLevel::ERROR);
 
-		backgroundColor = glm::vec3{ 0, 0, 0 };
-
 		glEnable(GL_CULL_FACE);
 		glEnable(GL_MULTISAMPLE);
 		glCullFace(GL_BACK);
@@ -63,12 +54,6 @@ public:
 		return glfwWindowShouldClose(window);
 	}
 
-	void SetBackgroundColor(const glm::vec3& color)
-	{
-		Logger_WriteConsole("Set the current window's background color to: '" + std::to_string(color.x) + ", " + std::to_string(color.y) + ", " + std::to_string(color.z) + "'", LogLevel::INFO);
-		backgroundColor = color;
-	}
-
 	void UpdateColors()
 	{
 		glClearColor(backgroundColor.x, backgroundColor.y, backgroundColor.z, 1.0f);
@@ -81,65 +66,9 @@ public:
 		glfwPollEvents();
 	}
 	
-	GLFWwindow* GetInternal()
-	{
-		return window;
-	}
-
-	static void SetMouseCallback(const float& data1, const float& data2)
-	{
-		mouseData.mouseX = data1;
-		mouseData.mouseY = data2;
-	}
-
-	static MouseCallbackData GetMouseCallback()
-	{
-		return mouseData;
-	}
-
 	void CleanUp()
 	{
 		glfwTerminate();
 	}
-
-	static glm::ivec2 GetDimensions()
-	{
-		int width, height;
-		glfwGetWindowSize(window, &width, &height);
-		return glm::ivec2{width, height};
-	}
-
-	void SetShouldUpdate(bool value)
-	{
-		shouldResize = value;
-	}
-
-	bool GetShouldUpdate() const
-	{
-		return shouldResize;
-	}
-
-private:
-
-	static void FSC(GLFWwindow* window, int width, int height)
-	{
-		shouldResize = true;
-		glViewport(0, 0, width, height);
-		
-	}
-
-	static void MouseCallback(GLFWwindow* window, double xposIn, double yposIn)
-	{
-		Window::SetMouseCallback(static_cast<float>(xposIn), static_cast<float>(yposIn));
-	}
-
-	glm::vec3 backgroundColor;
-	static GLFWwindow* window;
-	static MouseCallbackData mouseData;
-
 };
-
-GLFWwindow* Window::window;
-MouseCallbackData Window::mouseData;
-
 #endif // !WINDOW_HPP

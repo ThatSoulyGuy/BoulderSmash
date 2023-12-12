@@ -30,7 +30,6 @@ int main(void)
 
 	MainOverlay::Init();
 
-	std::shared_ptr<Window> window(new Window());
 	std::shared_ptr<Camera> camera(new Camera());
 	std::shared_ptr<PointLight> light(new PointLight());
 	std::shared_ptr<DirectionalLight> directionalLight(new DirectionalLight());
@@ -38,7 +37,6 @@ int main(void)
 	window->GenerateWindow("BoulderSmash* 0.1.9", 780, 450);
 	window->SetBackgroundColor(glm::vec3{ 0.0f, 0.0f, 0.0f });
 
-	Input::Init(window);
 	TextManager::InitText();
 
 	directionalLight->Register(glm::vec3{ -0.2f, -1.0f, -0.3f }, glm::vec3{ 0.05f, 0.05f, 0.05f }, glm::vec3{ 0.4f, 0.4f, 0.4f }, glm::vec3{ 0.05f, 0.05f, 0.05f });

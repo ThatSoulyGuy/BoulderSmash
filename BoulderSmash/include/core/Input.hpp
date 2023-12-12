@@ -3,15 +3,8 @@
 
 #include "core/Window.hpp"
 
-std::shared_ptr<Window> window;
-
 namespace Input
 {
-	void Init(std::shared_ptr<Window> _window)
-	{
-		window = _window;
-	}
-
 	bool GetKeyDown(const int& key)
 	{
 		return glfwGetKey(window->GetInternal(), key) == GLFW_PRESS;
