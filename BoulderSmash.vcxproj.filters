@@ -90,6 +90,12 @@
     <ClInclude Include="BoulderSmash\include\components\BoxCollider.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="BoulderSmash\include\utils\ANSIFormatter.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="BoulderSmash\include\threading\ThreadTaskExecutor.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BoulderSmash\BoulderSmash.cpp">

@@ -194,6 +194,8 @@
     <ClInclude Include="BoulderSmash\include\rendering\Skybox.hpp" />
     <ClInclude Include="BoulderSmash\include\rendering\Texture.hpp" />
     <ClInclude Include="BoulderSmash\include\gui\TextManager.hpp" />
+    <ClInclude Include="BoulderSmash\include\threading\ThreadTaskExecutor.hpp" />
+    <ClInclude Include="BoulderSmash\include\utils\ANSIFormatter.hpp" />
     <ClInclude Include="BoulderSmash\include\utils\StringHelper.hpp" />
     <ClInclude Include="Libraries\include\STBI\stb_image.h" />
   </ItemGroup>
