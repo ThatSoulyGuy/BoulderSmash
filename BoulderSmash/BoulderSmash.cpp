@@ -36,7 +36,7 @@ int main(void)
 	std::shared_ptr<PointLight> light(new PointLight());
 	std::shared_ptr<DirectionalLight> directionalLight(new DirectionalLight());
 
-	Window::Generate("BoulderSmash* 0.2.0", { 780, 450 }, {0.0f, 0.0f, 0.0f});
+	Window::Generate("BoulderSmash* 0.2.1", { 780, 450 }, {0.0f, 0.0f, 0.0f});
 
 	TextManager::InitText();
 
