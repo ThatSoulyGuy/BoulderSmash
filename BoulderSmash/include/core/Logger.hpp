@@ -16,7 +16,7 @@ enum class LogLevel
 {
 	INFO,
 	WARNING,
-	ERROR,
+	ISSUE,
 	FATAL_ERROR
 };
 
@@ -52,7 +52,7 @@ void __WriteConsole(const std::string& message, const std::string& function, Log
 		printf("\033[0m");
 		break;
 
-	case LogLevel::ERROR:
+	case LogLevel::ISSUE:
 		printf("\033[1;31m");
 		printf("[%d:%d:%d] [Thread/ERROR] [%s] %s\n", tm->tm_hour, tm->tm_sec, tm->tm_min, name.c_str(), message.c_str());
 		printf("\033[0m");
@@ -93,7 +93,7 @@ void __ThrowError(const std::string& unexpected, const std::string& message, con
 	name[0] = std::toupper(name[0]);
 
 	if (!fatal)
-		__WriteConsole("Unexpected >>" + unexpected + "<<, " + message + ", at: '" + function + "::" + std::to_string(line) + "'.", name, LogLevel::ERROR);
+		__WriteConsole("Unexpected >>" + unexpected + "<<, " + message + ", at: '" + function + "::" + std::to_string(line) + "'.", name, LogLevel::ISSUE);
 	else
 	{
 		MessageBoxA(NULL, message.c_str(), unexpected.c_str(), MB_ICONERROR);

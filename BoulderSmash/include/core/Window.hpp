@@ -8,16 +8,16 @@
 #include <glm/glm.hpp>
 #include "core/Logger.hpp"
 
-struct MouseCallbackData
+namespace Window
 {
-	float mouseX;
-	float mouseY;
-};
+	glm::ivec2 size;
+	glm::ivec2 position;
+	glm::vec3 color;
+	glm::vec2 mousePosition;
+	GLFWwindow* raw;
 
-bool shouldResize = false;
-
-class Window
-{
+	void Initalize()
+	{
 		if (!glfwInit())
 			Logger_ThrowError("NULL", "Do you have OpenGL compatible graphics card?", true);
 
@@ -25,17 +25,36 @@ class Window
 		glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
 		glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
 		glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+	}
+	
+	static void FSC(GLFWwindow* window, int width, int height)
+	{
+		glViewport(0, 0, width, height);
+	}
 
-		window = glfwCreateWindow(width, height, name.c_str(), NULL, NULL);
-		if(!window)
+	static void MouseCallback(GLFWwindow* window, double xposIn, double yposIn)
+	{
+		Window::mousePosition.x = static_cast<float>(xposIn);
+		Window::mousePosition.y = static_cast<float>(yposIn);
+	}
+
+	void Generate(const std::string& name, const glm::ivec2& size, const glm::vec3& color)
+	{
+		Logger_WriteConsole("Attempting to create GLFW window...", LogLevel::INFO);
+
+		Window::size = size;
+		Window::color = color;
+
+		raw = glfwCreateWindow(size.x, size.y, name.c_str(), NULL, NULL);
+		if(!raw)
 			Logger_ThrowError("NULL", "Do you have OpenGL compatible graphics card?", true);
 
-		glfwMakeContextCurrent(window);
-		glfwSetFramebufferSizeCallback(window, FSC);
-		glfwSetCursorPosCallback(window, MouseCallback);
+		glfwMakeContextCurrent(raw);
+		glfwSetFramebufferSizeCallback(raw, FSC);
+		glfwSetCursorPosCallback(raw, MouseCallback);
 
 		if(!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
-			Logger_WriteConsole("Unexpected >>NULL<< at Window::CreateWindow::31 (Do you have GLAD compatible graphics card?)", LogLevel::ERROR);
+			Logger_WriteConsole("Unexpected >>NULL<< at Window::CreateWindow::31 (Do you have GLAD compatible graphics card?)", LogLevel::ISSUE);
 
 		glEnable(GL_CULL_FACE);
 		glEnable(GL_MULTISAMPLE);
@@ -51,21 +70,21 @@ class Window
 
 	bool ShouldClose()
 	{
-		return glfwWindowShouldClose(window);
+		return glfwWindowShouldClose(raw);
 	}
 
 	void UpdateColors()
 	{
-		glClearColor(backgroundColor.x, backgroundColor.y, backgroundColor.z, 1.0f);
+		glClearColor(color.x, color.y, color.z, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
 	}
 
 	void UpdateBuffers()
 	{
-		glfwSwapBuffers(window);
+		glfwSwapBuffers(raw);
 		glfwPollEvents();
 	}
-	
+
 	void CleanUp()
 	{
 		glfwTerminate();

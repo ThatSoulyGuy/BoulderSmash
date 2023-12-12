@@ -7,36 +7,35 @@ namespace Input
 {
 	bool GetKeyDown(const int& key)
 	{
-		return glfwGetKey(window->GetInternal(), key) == GLFW_PRESS;
+		return glfwGetKey(Window::raw, key) == GLFW_PRESS;
 	}
 
 	bool GetKeyUp(const int& key)
 	{
-		return glfwGetKey(window->GetInternal(), key) == GLFW_RELEASE;
+		return glfwGetKey(Window::raw, key) == GLFW_RELEASE;
 	}
 
 	bool GetMouseButtonDown(const int& button)
 	{
-		return glfwGetMouseButton(window->GetInternal(), button) == GLFW_PRESS;
+		return glfwGetMouseButton(Window::raw, button) == GLFW_PRESS;
 	}
 
 	bool GetMouseButtonUp(const int& button)
 	{
-		return glfwGetMouseButton(window->GetInternal(), button) == GLFW_RELEASE;
+		return glfwGetMouseButton(Window::raw, button) == GLFW_RELEASE;
 	}
 
-	MouseCallbackData GetMousePosition()
+	glm::vec2 GetMousePosition()
 	{
-		return window->GetMouseCallback();
-
+		return Window::mousePosition;
 	}
 
 	void SetCursorMode(const bool& value)
 	{
 		if (!value)
-			glfwSetInputMode(window->GetInternal(), GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+			glfwSetInputMode(Window::raw, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 		else
-			glfwSetInputMode(window->GetInternal(), GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+			glfwSetInputMode(Window::raw, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
 	}
 }
 

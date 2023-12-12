@@ -35,7 +35,7 @@ namespace TextManager
         shader = ShaderManager::GetShader("textShader");
         shader.BindShader();
 
-        glm::mat4 projection = glm::ortho(0.0f, static_cast<float>(Window::GetDimensions().x), 0.0f, static_cast<float>(Window::GetDimensions().y));
+        glm::mat4 projection = glm::ortho(0.0f, static_cast<float>(Window::size.x), 0.0f, static_cast<float>(Window::size.y));
 
         shader.Use();
         glUniformMatrix4fv(glGetUniformLocation(shader.ID, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
@@ -44,7 +44,7 @@ namespace TextManager
     void UpdateRendering()
     {
         shader.Use();
-        glUniformMatrix4fv(glGetUniformLocation(shader.ID, "projection"), 1, GL_FALSE, glm::value_ptr(glm::ortho(0.0f, static_cast<float>(Window::GetDimensions().x), 0.0f, static_cast<float>(Window::GetDimensions().y))));
+        glUniformMatrix4fv(glGetUniformLocation(shader.ID, "projection"), 1, GL_FALSE, glm::value_ptr(glm::ortho(0.0f, static_cast<float>(Window::size.x), 0.0f, static_cast<float>(Window::size.y))));
     }
 
 	void InitText()
@@ -123,7 +123,7 @@ namespace TextManager
         glActiveTexture(GL_TEXTURE0);
         glBindVertexArray(VAO);
 
-        glm::vec2 screenPosition = glm::vec2{ position.x * Window::GetDimensions().x, position.y * Window::GetDimensions().y };
+        glm::vec2 screenPosition = glm::vec2{ position.x * Window::size.x, position.y * Window::size.y };
         std::string::const_iterator c;
 
         for (c = text.begin(); c != text.end(); c++)

@@ -67,7 +67,7 @@ public:
 
         if (!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode) // if is Not Zero
         {
-            Logger_WriteConsole(importer.GetErrorString(), LogLevel::ERROR);
+            Logger_WriteConsole(importer.GetErrorString(), LogLevel::ISSUE);
             return;
         }
         

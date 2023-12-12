@@ -21,7 +21,7 @@ class Camera
 
 public:
 
-	void InitCamera(const std::shared_ptr<Window>& window, const glm::vec3& position)
+	void InitCamera(const glm::vec3& position)
 	{
 		InternalInit();
 
@@ -31,7 +31,7 @@ public:
 		qtov(transform.rotation) = glm::vec3{ 0.0f, -90.0f, 0.0f };
 		transform.up = glm::vec3{ 0.0f, 1.0f, 0.0f };
 
-		projection = glm::perspective<float>(glm::radians(45.0f), static_cast<float>((float)window->GetDimensions().x / (float)window->GetDimensions().y), 0.01, 100);
+		projection = glm::perspective<float>(glm::radians(45.0f), static_cast<float>((float)Window::size.x / (float)Window::size.y), 0.01, 100);
 		view = glm::translate(view, transform.position);
 
 		Input::SetCursorMode(false);
@@ -39,7 +39,7 @@ public:
 		Logger_WriteConsole("Successfully intialized camera!", LogLevel::INFO);
 	}
 
-	void Update(const std::shared_ptr<Window>& window)
+	void Update()
 	{
 		static bool isColliding = true;
 
@@ -49,11 +49,8 @@ public:
 
 		view = glm::lookAt(transform.position, transform.position + qtov(transform.rotation), transform.up);
 		
-		if (window->GetShouldUpdate())
-		{
-			projection = glm::perspective<float>(glm::radians(45.0f), static_cast<float>((float)window->GetDimensions().x / (float)window->GetDimensions().y), 0.01, 100);
-			window->SetShouldUpdate(false);
-		}
+		if (true) //TODO: Make this update every time the window resizes!
+			projection = glm::perspective<float>(glm::radians(45.0f), static_cast<float>((float)Window::size.x / (float)Window::size.y), 0.01, 100);
 		
 		if (collider.IsCollidingWith(EntityManager::GetEntity("asteroid").gameObject->GetComponent<BoxCollider>()) && isColliding)
 		{
@@ -143,9 +140,9 @@ private:
 
 		if (isPaused) return;
 
-		MouseCallbackData mouseData = Window::GetMouseCallback();
-		float xpos = mouseData.mouseX;
-		float ypos = mouseData.mouseY;
+		glm::vec2 mouseData = Input::GetMousePosition();
+		float xpos = mouseData.x;
+		float ypos = mouseData.y;
 
 		float xoffset = xpos - lastX;
 		float yoffset = lastY - ypos;
@@ -182,7 +179,6 @@ private:
 
 	bool isPaused;
 
-	std::shared_ptr<Window> window;
 	glm::mat4 view = glm::mat4(1.0f);
 	glm::mat4 projection = glm::mat4(1.0f);
 
