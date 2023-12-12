@@ -26,7 +26,6 @@ void __WriteConsole(const std::string& message, const std::string& function, Log
 	struct tm* tm = localtime(&t);
 
 	std::string name;
-	int position = 0;
 
 	while (function[position] != ':' && position < function.size())
 	{
@@ -39,7 +38,6 @@ void __WriteConsole(const std::string& message, const std::string& function, Log
 
 	switch (level)
 	{
-
 	case LogLevel::INFO:
 		printf("\033[1;32m");
 		printf("[%d:%d:%d] [Thread/INFO] [%s] %s\n", tm->tm_hour, tm->tm_sec, tm->tm_min, name.c_str(), message.c_str());
@@ -67,21 +65,12 @@ void __WriteConsole(const std::string& message, const std::string& function, Log
 
 	default:
 		break;
-
-	}
 }
-
-std::string __ReadConsole()
-{
-	std::string out;
-	std::cin >> out;
-	return out;
 }
 
 void __ThrowError(const std::string& unexpected, const std::string& message, const int& line, const std::string& function, const bool& fatal)
 {
 	std::string name;
-	int position = 0;
 
 	while (function[position] != ':' && position < function.size())
 	{
